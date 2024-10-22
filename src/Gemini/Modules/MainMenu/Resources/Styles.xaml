@@ -28,18 +28,9 @@
     </Style>
 
     <HierarchicalDataTemplate x:Key="menuTemplate" ItemsSource="{Binding Children}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Image Height="16" Source="{Binding IconSource}">
-            </Image>
-            <ContentPresenter
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                Content="{Binding Path=Text}"
-                RecognizesAccessKey="True" />
-        </Grid>
+        <ContentPresenter
+            VerticalAlignment="Center"
+            Content="{Binding Path=Text}"
+            RecognizesAccessKey="True" />
     </HierarchicalDataTemplate>
 </ResourceDictionary>
