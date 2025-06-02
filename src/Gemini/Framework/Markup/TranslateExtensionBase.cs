@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Data;
 using Caliburn.Micro;
 using Gemini.Framework.Languages;
@@ -13,7 +14,13 @@ namespace Gemini.Framework.Markup
             : base(member)
         {
             Mode = BindingMode.OneWay;
-            Source = IoC.Get<ILanguageManager>().GetTranslationSource(callback);
+            var language = default(ILanguageManager);
+#if DEBUG
+            if (View.InDesignMode)
+                language = new DefaultLanguageManager();
+#endif
+            language = language ?? IoC.Get<ILanguageManager>();
+            Source = language.GetTranslationSource(callback);
         }
     }
 }
