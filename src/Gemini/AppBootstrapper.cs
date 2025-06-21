@@ -95,7 +95,7 @@ namespace Gemini
 
             // Add all assemblies to AssemblySource (using a temporary AssemblyCatalog).
 
-            foreach (var item in System.IO.Directory.EnumerateFiles(currentWorkingDir, "*.dll",new EnumerationOptions() { RecurseSubdirectories = true}).Where((str) => { return !str.Contains("Vortice"); }))
+            foreach (var item in System.IO.Directory.EnumerateFiles(currentWorkingDir, "*.dll", new EnumerationOptions() { RecurseSubdirectories = true }).Where((str) => { return !str.Contains("Vortice"); }))
             {
                 try
                 {
@@ -105,7 +105,7 @@ namespace Gemini
                 {
                 }
             }
-            
+
             if (currentWorkingDir != baseDirectory)
             {
                 foreach (var item in System.IO.Directory.EnumerateFiles(baseDirectory, "*.dll", new EnumerationOptions() { RecurseSubdirectories = true }).Where((str) => { return !str.Contains("Vortice"); }))
@@ -207,7 +207,19 @@ namespace Gemini
             var exports = Container.GetExports<object>(contract);
 
             if (exports.Any())
-                return exports.First().Value;
+            {
+                while (true)
+                {
+                    try
+                    {
+                        return exports.First().Value;
+                    }
+                    catch (Exception e)
+                    {
+                        Thread.Sleep(0);
+                    }
+                }
+            }
 
             throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
         }
