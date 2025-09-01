@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Gemini.Framework;
 using Gemini.Framework.Services;
-using Xceed.Wpf.AvalonDock.Layout;
+using AvalonDock;
+using AvalonDock.Layout;
+using AvalonDock.Layout.Serialization;
 
 namespace Gemini.Modules.Shell.Controls
 {
