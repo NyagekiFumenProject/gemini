@@ -4,9 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Gemini.Framework;
 using Gemini.Framework.Services;
-using AvalonDock;
-using AvalonDock.Layout;
-using AvalonDock.Layout.Serialization;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Gemini.Modules.Shell.Controls
 {

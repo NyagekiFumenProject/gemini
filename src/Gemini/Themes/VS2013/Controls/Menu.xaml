@@ -473,9 +473,4 @@
     </Style>
     <Style BasedOn="{StaticResource StandardMenu}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MetroContextMenu}" TargetType="ContextMenu" />
-    <Style BasedOn="{StaticResource MetroContextMenu}" TargetType="ContextMenuEx" />
-    <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItemEx">
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
 </ResourceDictionary>
