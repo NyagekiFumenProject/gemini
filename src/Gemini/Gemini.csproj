@@ -29,7 +29,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <DesignData Include="Modules\Settings\SampleData\SettingsViewModelSampleData.xaml" />
     <Resource Include="Framework\ShaderEffects\GrayscaleEffect.ps" />
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -68,6 +67,10 @@
     
   <ItemGroup>
     <PackageReference Update="Nerdbank.GitVersioning" Version="3.9.50" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Modules\Settings\SampleData\" />
   </ItemGroup>
   
 </Project>
