@@ -8,7 +8,6 @@
     xmlns:geminibehaviors="clr-namespace:Gemini.Framework.Behaviors"
     x:Class="Gemini.Modules.Settings.Views.SettingsView" 
     mc:Ignorable="d" 
-    d:DataContext="{d:DesignData Source=../SampleData/SettingsViewModelSampleData.xaml}"
     Background="{DynamicResource EnvironmentWindowBackground}"
     Foreground="{DynamicResource EnvironmentWindowText}"
     Width="760" Height="500" MinWidth="512" MinHeight="300" 
