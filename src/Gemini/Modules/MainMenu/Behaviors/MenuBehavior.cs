@@ -33,6 +33,9 @@ namespace Gemini.Modules.MainMenu.Behaviors
         {
             var commandRouter = IoC.Get<ICommandRouter>();
             var menuItem = (MenuItem) sender;
+            if (e.OriginalSource != null && !ReferenceEquals(e.OriginalSource, menuItem))
+                return;
+
             foreach (var item in menuItem.Items.OfType<ICommandUiItem>().ToList())
                 item.Update(commandRouter.GetCommandHandler(item.CommandDefinition));
         }

@@ -17,6 +17,13 @@ namespace Gemini.Framework.Commands
         Task Run(Command command);
     }
 
+    public interface IDynamicMenuHandler<TCommandDefinition> : ICommandHandler
+        where TCommandDefinition : CommandListDefinition
+    {
+        void Populate(Command command, List<DynamicMenuItem> menuItems);
+        Task Run(Command command);
+    }
+
     public interface ICommandHandler
     {
         

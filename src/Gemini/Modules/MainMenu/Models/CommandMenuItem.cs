@@ -12,7 +12,7 @@ namespace Gemini.Modules.MainMenu.Models
         private readonly Command _command;
         private readonly KeyGesture _keyGesture;
         private readonly StandardMenuItem _parent;
-        private readonly List<StandardMenuItem> _listItems;
+        private readonly List<MenuItemBase> _listItems;
 
         public override string Text => _command.Text;
 
@@ -36,7 +36,7 @@ namespace Gemini.Modules.MainMenu.Models
             _keyGesture = IoC.Get<ICommandKeyGestureService>().GetPrimaryKeyGesture(_command.CommandDefinition);
             _parent = parent;
 
-            _listItems = new List<StandardMenuItem>();
+            _listItems = new List<MenuItemBase>();
 
             _command.PropertyChanged += CommandPropertyChanged;
         }
@@ -52,19 +52,18 @@ namespace Gemini.Modules.MainMenu.Models
 
                 _listItems.Clear();
 
-                var listCommands = new List<Command>();
-                commandHandler.Populate(_command, listCommands);
+                var dynamicMenuItems = new List<DynamicMenuItem>();
+                commandHandler.Populate(_command, dynamicMenuItems);
 
                 _command.Visible = false;
 
                 int startIndex = _parent.Children.IndexOf(this) + 1;
 
-                foreach (var command in listCommands)
+                foreach (var dynamicMenuItem in dynamicMenuItems)
                 {
-                    var newMenuItem = new CommandMenuItem(command, _parent)
-                    {
-                        IsListItem = true
-                    };
+                    var newMenuItem = CreateMenuItem(dynamicMenuItem, _parent, true);
+                    if (newMenuItem == null)
+                        continue;
                     _parent.Children.Insert(startIndex++, newMenuItem);
                     _listItems.Add(newMenuItem);
                 }
@@ -87,6 +86,31 @@ namespace Gemini.Modules.MainMenu.Models
                 case nameof(_command.IconSource):
                     NotifyOfPropertyChange(e.PropertyName);
                     break;
+            }
+        }
+
+        private static MenuItemBase CreateMenuItem(DynamicMenuItem dynamicMenuItem, StandardMenuItem parent, bool isListItem)
+        {
+            switch (dynamicMenuItem)
+            {
+                case DynamicSeparatorMenuItem _:
+                    return new MenuItemSeparator();
+
+                case DynamicCommandMenuItem commandMenuItem:
+                    var menuItem = new CommandMenuItem(commandMenuItem.Command, parent)
+                    {
+                        IsListItem = isListItem
+                    };
+                    foreach (var child in commandMenuItem.Children)
+                    {
+                        var childMenuItem = CreateMenuItem(child, menuItem, false);
+                        if (childMenuItem != null)
+                            menuItem.Add(childMenuItem);
+                    }
+                    return menuItem;
+
+                default:
+                    return null;
             }
         }
     };

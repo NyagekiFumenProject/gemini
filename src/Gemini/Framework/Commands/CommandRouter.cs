@@ -15,6 +15,7 @@ namespace Gemini.Framework.Commands
     {
         private static readonly Type CommandHandlerInterfaceType = typeof(ICommandHandler<>);
         private static readonly Type CommandListHandlerInterfaceType = typeof(ICommandListHandler<>);
+        private static readonly Type DynamicMenuHandlerInterfaceType = typeof(IDynamicMenuHandler<>);
 
         private readonly Dictionary<Type, CommandHandlerWrapper> _globalCommandHandlerWrappers;
         private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
@@ -31,7 +32,7 @@ namespace Gemini.Framework.Commands
         {
             var commandHandlersList = SortCommandHandlers(commandHandlers);
 
-            // Command handlers are either ICommandHandler<T> or ICommandListHandler<T>.
+            // Command handlers are ICommandHandler<T>, ICommandListHandler<T>, or IDynamicMenuHandler<T>.
             // We need to extract T, and use it as the key in our dictionary.
 
             var result = new Dictionary<Type, CommandHandlerWrapper>();
@@ -149,7 +150,11 @@ namespace Gemini.Framework.Commands
             if (typeof(CommandDefinition).IsAssignableFrom(commandDefinitionType))
                 return CommandHandlerWrapper.FromCommandHandler(CommandHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
             if (typeof(CommandListDefinition).IsAssignableFrom(commandDefinitionType))
+            {
+                if (IsCommandHandlerForGenericInterfaceType(commandHandler, commandDefinitionType, DynamicMenuHandlerInterfaceType))
+                    return CommandHandlerWrapper.FromDynamicMenuHandler(DynamicMenuHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
                 return CommandHandlerWrapper.FromCommandListHandler(CommandListHandlerInterfaceType.MakeGenericType(commandDefinitionType), commandHandler);
+            }
             throw new InvalidOperationException();
         }
 
@@ -173,7 +178,17 @@ namespace Gemini.Framework.Commands
 
                 foreach (var handledCommandDefinitionType in GetAllHandledCommandedDefinitionTypes(commandHandlerType, CommandListHandlerInterfaceType))
                     commandDefinitionTypes.Add(handledCommandDefinitionType);
+
+                foreach (var handledCommandDefinitionType in GetAllHandledCommandedDefinitionTypes(commandHandlerType, DynamicMenuHandlerInterfaceType))
+                    commandDefinitionTypes.Add(handledCommandDefinitionType);
             }
+        }
+
+        private static bool IsCommandHandlerForGenericInterfaceType(
+            object commandHandler, Type commandDefinitionType, Type genericInterfaceType)
+        {
+            return GetAllHandledCommandedDefinitionTypes(commandHandler.GetType(), genericInterfaceType)
+                .Contains(commandDefinitionType);
         }
 
         private static IEnumerable<Type> GetAllHandledCommandedDefinitionTypes(
