@@ -5,6 +5,10 @@
         string SettingsPageName { get; }
         string SettingsPagePath { get; }
 
+        void BeginEdit();
+
         void ApplyChanges();
+
+        void CancelChanges();
     }
 }

@@ -15,8 +15,10 @@ namespace Gemini.Modules.Settings.ViewModels
     [PartCreationPolicy (CreationPolicy.NonShared)]
     public class SettingsViewModel : WindowBase
     {
-        private IEnumerable<ISettingsEditor> _settingsEditors;
+        private IEnumerable<ISettingsEditor> _settingsEditors = Array.Empty<ISettingsEditor>();
         private SettingsPageViewModel _selectedPage;
+        private bool _changesApplied;
+        private bool _editSessionEnded;
 
         public SettingsViewModel()
         {
@@ -40,7 +42,12 @@ namespace Gemini.Modules.Settings.ViewModels
             await base.OnInitializeAsync(cancellationToken);
 
             var pages = new List<SettingsPageViewModel>();
-            _settingsEditors = IoC.GetAll<ISettingsEditor>();
+            _settingsEditors = IoC.GetAll<ISettingsEditor>().ToArray();
+
+            foreach (var settingsEditor in _settingsEditors)
+            {
+                settingsEditor.BeginEdit();
+            }
 
             foreach (var settingsEditor in _settingsEditors)
             {
@@ -109,9 +116,25 @@ namespace Gemini.Modules.Settings.ViewModels
                 settingsEditor.ApplyChanges();
             }
 
+            _changesApplied = true;
+            _editSessionEnded = true;
             await TryCloseAsync(true);
         }
 
         public Task Cancel() => TryCloseAsync(false);
+
+        protected override async Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            if (close && !_changesApplied && !_editSessionEnded)
+            {
+                _editSessionEnded = true;
+                foreach (var settingsEditor in _settingsEditors)
+                {
+                    settingsEditor.CancelChanges();
+                }
+            }
+
+            await base.OnDeactivateAsync(close, cancellationToken);
+        }
     }
 }
