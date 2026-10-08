@@ -285,4 +285,13 @@
     <data name="ViewFullScreenCommandToolTip" xml:space="preserve">
     <value>Full Screen</value>
   </data>
+  <data name="SettingsToolTipGeneralTheme" xml:space="preserve">
+    <value>Selects the application color theme, including menus, panels and tooltips. Save the options to switch themes. This changes UI appearance only, not chart data or the separately configured lane colors.</value>
+  </data>
+  <data name="SettingsToolTipGeneralLanguage" xml:space="preserve">
+    <value>Selects the language for interface labels and tooltips. Saving refreshes text that uses dynamic translation bindings; restart the program to apply the language consistently to all views. A blank language uses the default resource language.</value>
+  </data>
+  <data name="SettingsToolTipGeneralAutoHideMenu" xml:space="preserve">
+    <value>Checked: hides the main menu when it does not have focus, leaving more vertical space; use Alt to focus and reveal the menu. Unchecked: keeps it visible. Applies after saving the options and does not remove menu commands.</value>
+  </data>
 </root>

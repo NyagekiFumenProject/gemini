@@ -285,4 +285,13 @@
     <data name="SaveChangesBeforeClosingMessage" xml:space="preserve">
       <value>閉じる前に{0}への変更 "{1}" を保存しますか？</value>
   </data>
+  <data name="SettingsToolTipGeneralTheme" xml:space="preserve">
+    <value>メニュー、パネル、ツールチップを含む UI の配色テーマを選びます。設定を保存すると切り替わります。譜面データや個別に設定したレーン色は変更しません。</value>
+  </data>
+  <data name="SettingsToolTipGeneralLanguage" xml:space="preserve">
+    <value>UI の文字とツールチップの言語を選びます。保存すると動的翻訳の文字を更新します。すべての画面に統一して適用するには再起動してください。空の言語項目は既定のリソース言語です。</value>
+  </data>
+  <data name="SettingsToolTipGeneralAutoHideMenu" xml:space="preserve">
+    <value>オン：フォーカスがないときにメインメニューを隠して縦の表示領域を増やします。Alt でメニューにフォーカスを移して表示できます。オフ：常に表示します。設定保存後に適用し、メニュー項目は削除しません。</value>
+  </data>
 </root>

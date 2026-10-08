@@ -14,12 +14,17 @@
     IsTabStop="False"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:CultureInfoNameConverter x:Key="CultureInfoNameConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Gemini;component/Themes/SettingsToolTips.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:CultureInfoNameConverter x:Key="CultureInfoNameConverter" />
+        </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
             <Label Width="100" Content="{markup:Translate [MainMenuSettingsColorTheme]}" />
-            <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}">
+            <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" ToolTip="{markup:Translate [SettingsToolTipGeneralTheme]}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -29,7 +34,7 @@
         </StackPanel>
         <StackPanel Margin="0,3,0,0" Orientation="Horizontal">
             <Label Width="100" Content="{markup:Translate [MainMenuSettingsLanguage]}" />
-            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}">
+            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" ToolTip="{markup:Translate [SettingsToolTipGeneralLanguage]}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -43,6 +48,7 @@
         <CheckBox
             Margin="0,5,0,0"
             Content="{markup:Translate [MainMenuSettingsAutoHideMainMenu]}"
+            ToolTip="{markup:Translate [SettingsToolTipGeneralAutoHideMenu]}"
             IsChecked="{Binding AutoHideMainMenu}" />
     </StackPanel>
 </UserControl>

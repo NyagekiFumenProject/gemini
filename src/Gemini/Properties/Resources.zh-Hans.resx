@@ -285,4 +285,13 @@
     <data name="SaveChangesBeforeClosingMessage" xml:space="preserve">
         <value>在关闭之前保存对 {0} “{1}”的更改？</value>
     </data>
+  <data name="SettingsToolTipGeneralTheme" xml:space="preserve">
+    <value>选择程序界面的色彩主题，包括菜单、面板和提示框。保存选项后切换主题。仅改变界面外观，不修改谱面数据或单独设置的轨道颜色。</value>
+  </data>
+  <data name="SettingsToolTipGeneralLanguage" xml:space="preserve">
+    <value>选择界面文字和提示框的语言。保存后刷新采用动态翻译绑定的文字；重启程序可让所有界面统一采用新语言。空白语言项使用默认资源语言。</value>
+  </data>
+  <data name="SettingsToolTipGeneralAutoHideMenu" xml:space="preserve">
+    <value>勾选：主菜单未获得焦点时隐藏，腾出更多垂直空间；可按 Alt 让菜单获得焦点并显示。取消勾选：主菜单保持可见。保存选项后生效，不会移除菜单命令。</value>
+  </data>
 </root>
