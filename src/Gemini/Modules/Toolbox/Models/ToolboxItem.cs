@@ -9,5 +9,6 @@ namespace Gemini.Modules.Toolbox.Models
         public string Category { get; set; }
         public Uri IconSource { get; set; }
         public Type ItemType { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -12,7 +12,8 @@ namespace Gemini.Modules.Toolbox.Services
     {
         private readonly Dictionary<Type, IEnumerable<ToolboxItem>> _toolboxItems;
 
-        public ToolboxService()
+        [ImportingConstructor]
+        public ToolboxService([Import(AllowDefault = true)] IToolboxItemLocalizer localizer = null)
         {
             _toolboxItems = AssemblySource.Instance
                 .SelectMany(x => x.GetTypes().Where(y => y.GetCustomAttributes(typeof(ToolboxItemAttribute), false).Any()))
@@ -26,6 +27,7 @@ namespace Gemini.Modules.Toolbox.Services
                         Category = attribute.Category,
                         IconSource = (attribute.IconSource != null) ? new Uri(attribute.IconSource) : null,
                         ItemType = x,
+                        Description = localizer is null ? attribute.Description : localizer.LocalizeDescription(attribute.Description),
                     };
                 })
                 .GroupBy(x => x.DocumentType)

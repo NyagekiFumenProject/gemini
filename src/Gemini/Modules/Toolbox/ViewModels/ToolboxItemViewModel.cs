@@ -27,6 +27,11 @@ namespace Gemini.Modules.Toolbox.ViewModels
             get { return _model.IconSource; }
         }
 
+        public string Description
+        {
+            get { return _model.Description; }
+        }
+
         public ToolboxItemViewModel(ToolboxItem model)
         {
             _model = model;
